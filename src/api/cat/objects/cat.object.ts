@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Cat as PrismaCat } from '@prisma/client';
 import { Owner } from 'src/api/owner/objects/owner.object';
 
-export type CatSchema = Pick<PrismaCat, 'id' | 'name' | 'age' | 'ownerId'> & {
+export type CatSchema = Pick<PrismaCat, 'id' | 'name' | 'age'> & {
   owner: Owner;
 };
 
@@ -20,9 +20,6 @@ export class Cat implements CatSchema {
 
   @Field(() => Number, { nullable: true })
   age: Nullable<number>;
-
-  @Field(() => ID, { nullable: true })
-  ownerId: Nullable<string>;
 
   @Field(() => Owner, { nullable: true })
   owner: Nullable<Owner>;
