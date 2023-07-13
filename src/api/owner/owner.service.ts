@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Owner as PrismaOwner } from '@prisma/client';
+import { Cat as PrismaCat, Owner as PrismaOwner } from '@prisma/client';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { ICreateOwnerInput } from './inputs/create-owner.input';
 import { IFindOwnerInput } from './inputs/find-owner.input';
@@ -23,5 +23,15 @@ export class OwnerService {
 
   findOwners(): Promise<PrismaOwner[]> {
     return this.prisma.owner.findMany();
+  }
+
+  async findRelatedCats(ownerId: string): Promise<PrismaCat[]> {
+    const relatedCats = await this.prisma.owner
+      .findUnique({
+        where: { id: ownerId },
+      })
+      .cats();
+
+    return relatedCats;
   }
 }
