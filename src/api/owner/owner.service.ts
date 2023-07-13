@@ -20,4 +20,8 @@ export class OwnerService {
   findOwner(findOwnerInput: IFindOwnerInput): Promise<Nullable<PrismaOwner>> {
     return this.prisma.owner.findUnique({ where: { id: findOwnerInput.id } });
   }
+
+  findOwners(): Promise<PrismaOwner[]> {
+    return this.prisma.owner.findMany();
+  }
 }
