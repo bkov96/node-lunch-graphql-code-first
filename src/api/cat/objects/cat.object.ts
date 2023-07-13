@@ -16,8 +16,8 @@ export class Cat implements CatSchema {
   name: string;
 
   @Field(() => Number, { nullable: true })
-  age: number | null;
+  age: Nullable<number>;
 
   @Field(() => ID, { nullable: true })
-  ownerId: string | null;
+  ownerId: Nullable<string>;
 }
