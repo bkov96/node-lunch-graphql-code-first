@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { ICreateCatInput } from './inputs/create-cat.input';
-import { Cat as PrismaCat } from '@prisma/client';
+import { Cat as PrismaCat, Owner as PrismaOwner } from '@prisma/client';
 import { IFindCatInput } from './inputs/find-cat.input';
 
 @Injectable()
@@ -49,5 +49,15 @@ export class CatService {
         ownerId: null,
       },
     });
+  }
+
+  async findRelatedOwner(catId: string): Promise<Nullable<PrismaOwner>> {
+    const relatedOwner = await this.prisma.cat
+      .findUnique({
+        where: { id: catId },
+      })
+      .owner();
+
+    return relatedOwner;
   }
 }
